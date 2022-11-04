@@ -1,7 +1,8 @@
-package com.example.First.Project.controller;
-import com.example.First.Project.dto.ArticleForm;
-import com.example.First.Project.entity.Article;
-import com.example.First.Project.repository.ArticleRepository;
+package com.example.SecondProject.controller;
+
+import com.example.SecondProject.dto.ArticleForm;
+import com.example.SecondProject.entity.Article;
+import com.example.SecondProject.repository.ArticleRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,8 +15,9 @@ import java.util.List;
 
 @Controller
 @Slf4j //로깅을 위한 lombok 어노테이션
-public class ArticleController {
-    @Autowired //스프링 부트가 이미 생성해 놓은 레파지토 객체를 가져옴(DI)
+public class ArtilceController {
+
+    @Autowired //스프링 부트가 이미 생성해 놓은 레파지토리 객체를 자겨옴(DI)
     private ArticleRepository articleRepository;
 
     @GetMapping("/articles/new")
@@ -24,22 +26,21 @@ public class ArticleController {
         return "articles/new";
     }
 
-    @PostMapping("/articles/create")
-    public String createArticle(ArticleForm form){
+    @PostMapping("articles/create")
+    public String creteArticle(ArticleForm form){
 
-        //System.out.println(form.toString());
         log.info(form.toString());
-        //1. DTO를 Entity로 변환
+        //1. DTO를 Entity 로 변환
         Article article = form.toEntity();
-        //System.out.println(article.toString());
         log.info(article.toString());
 
-        //2. Repository에게 Entity로 DB로 저장하게 함
+        //2. Repository에게 Entity를 DB에 저장
         Article saved = articleRepository.save(article);
-        //System.out.println(saved.toString());
         log.info(saved.toString());
         return "";
+
     }
+
     @GetMapping("/articles/{id}") //해당 url요청을 처리 선언
     public String show(@PathVariable Long id, Model model){ //url에서 id 변수를 가져옴
         log.info("id = " + id);
@@ -54,10 +55,11 @@ public class ArticleController {
 
     @GetMapping("/articles")
     public String index(Model model){
-        //1. 모든 Article을 가져온다.
-        List<Article> articleEntitiyList = articleRepository.findAll();
+
+        //1. 모든 Article을 가져옴
+        List<Article> articleEntityList = articleRepository.findAll();
         //2. 가져온 Article의 묶음을 뷰로 전달
-        model.addAttribute("articleList",articleEntitiyList);
+        model.addAttribute("articleList",articleEntityList);
         //3. 뷰 페이지를 설정
         return "articles/index";
     }
