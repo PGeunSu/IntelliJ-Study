@@ -2,6 +2,7 @@ package com.example.SecondProject.entity;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.internal.build.AllowPrintStacktrace;
@@ -14,6 +15,7 @@ import javax.persistence.Id;
 @Entity
 @AllArgsConstructor
 @ToString
+@Getter
 @NoArgsConstructor
 public class Article {
 

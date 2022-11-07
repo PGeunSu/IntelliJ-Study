@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.Iterator;
 import java.util.List;
 
 @Controller
@@ -38,7 +39,7 @@ public class ArticleController {
         Article saved = articleRepository.save(article);
         //System.out.println(saved.toString());
         log.info(saved.toString());
-        return "";
+        return "redirect:/articles/" + saved.getId();
     }
     @GetMapping("/articles/{id}") //해당 url요청을 처리 선언
     public String show(@PathVariable Long id, Model model){ //url에서 id 변수를 가져옴
@@ -54,11 +55,49 @@ public class ArticleController {
 
     @GetMapping("/articles")
     public String index(Model model){
-        //1. 모든 Article을 가져온다.
+        //1. 모든 Article을 가져온다. (3가지 방법)
+        //List<Article> articleEntitiyList = (List<Article>) articleRepository.findAll();
+        //Iterable<Article> articleEntitiyList = articleRepository.findAll();
         List<Article> articleEntitiyList = articleRepository.findAll();
+        // == ArrayList<Article>
         //2. 가져온 Article의 묶음을 뷰로 전달
         model.addAttribute("articleList",articleEntitiyList);
         //3. 뷰 페이지를 설정
         return "articles/index";
     }
+
+    @GetMapping("/articles/{id}/edit") //PathVariable : URL에서 id가져오기
+    public String edit(@PathVariable Long id, Model model){
+        //1. 수정할 데이터 가져오기
+        Article articleEntity = articleRepository.findById(id).orElse(null);
+        //2. 모델에 데이터 등록
+        model.addAttribute("article",articleEntity);
+        //3. view 페이지 설정
+        return "articles/edit";
+    }
+
+    //한글 깨질 떄
+    //HELP : Edit custom ym options
+    //-Dfile.encoding=UTF-8
+    //-Dconsole.encoding=UTF-8
+
+    //실행이 끝났으면 file -> "invalidate Cashes"
+
+    @PostMapping("/articles/update")
+    public String update(ArticleForm form){
+        log.info(form.toString());
+        //1. DTO를 Entity로 변환
+        Article articleEntity = form.toEntity();
+        log.info(articleEntity.toString());
+        //2. Entity를 DB에 저장
+        //2-1. DB에서 기존 데이터를 가져옴
+        Article target = articleRepository.findById(articleEntity.getId()).orElse(null);
+        //2-2. 기존 데이터가 있다면, 값을 갱신
+        if(target != null){
+            articleRepository.save(articleEntity);
+        }
+        //3. 수정 결과 페이지 redirect
+        return "redirect:/articles/" + articleEntity.getId();
+       }
+
 }

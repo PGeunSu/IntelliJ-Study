@@ -3,7 +3,6 @@ package com.example.First.Project.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import sun.font.EAttribute;
 
 @Controller
 public class FirstController {
