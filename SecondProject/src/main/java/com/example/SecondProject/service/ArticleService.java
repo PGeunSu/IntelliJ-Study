@@ -1,14 +1,13 @@
-package com.example.First.Project.service;
+package com.example.SecondProject.service;
 
-import com.example.First.Project.dto.ArticleForm;
-import com.example.First.Project.entity.Article;
-import com.example.First.Project.repository.ArticleRepository;
+import com.example.SecondProject.dto.ArticleForm;
+import com.example.SecondProject.entity.Article;
+import com.example.SecondProject.repository.ArticleRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,35 +19,32 @@ public class ArticleService {
     private ArticleRepository articleRepository;
 
     public List<Article> index() {
-
         return articleRepository.findAll();
     }
 
-    public Article show(Long id){
-
+    public Article show(Long id) {
         return articleRepository.findById(id).orElse(null);
     }
 
     public Article create(ArticleForm dto) {
         Article article = dto.toEntity();
-        if(article.getId() != null ){  //기존 데이터 수정 방지 (id 입력 방지)
+        if (article.getId() != null) {// 기존 데이터 수정 방지(id입력 방지)
             return null;
         }
         return articleRepository.save(article);
     }
 
     public Article update(Long id, ArticleForm dto) {
-
         Article article = dto.toEntity();
-        log.info("id : {} , article : {}" , id, article.toString());
-        //대상 Entity 조회
+        log.info("id : {}, article : {}", id, article.toString());
+
         Article target = articleRepository.findById(id).orElse(null);
-        //잘못된 요청 처리(대상이 없거나 id가 다른 경우)
-        if(target == null || id != article.getId()){
-            log.info("잘못된 요청 id : {}, article : {}" ,id, article.toString());
+
+        if (target == null || id != article.getId()) {
+            log.info("잘못된 요청 id : {}, article : {}", id, article.toString());
             return null;
         }
-        //업데이트 및 정상응답(200)
+        //업데이트 및 정상응답 (200)
         target.patch(article);
         Article updated = articleRepository.save(target);
         return updated;
@@ -58,7 +54,7 @@ public class ArticleService {
 
         Article target = articleRepository.findById(id).orElse(null);
 
-        if(target == null){
+        if (target == null) {
             return null;
         }
         articleRepository.delete(target);
@@ -95,5 +91,7 @@ public class ArticleService {
 
         return articleList;
 
+
     }
+
 }

@@ -7,10 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.internal.build.AllowPrintStacktrace;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @AllArgsConstructor
@@ -20,7 +17,7 @@ import javax.persistence.Id;
 public class Article {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //기본키 생성을 데이터 베이스 위임 (AUTO INCREMENT)
     private Long id;
 
     @Column
@@ -29,4 +26,12 @@ public class Article {
     @Column
     private String content;
 
+    public void patch(Article article) {
+        if(article.title != null){
+            this.title = article.title;
+        }
+       if(article.content != null){
+           this.content = article.content;
+       }
+    }
 }
