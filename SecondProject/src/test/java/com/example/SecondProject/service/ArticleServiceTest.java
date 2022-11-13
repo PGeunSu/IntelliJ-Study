@@ -69,6 +69,7 @@ class ArticleServiceTest {
     }
 
     @Test
+
     void create_실패_id가_포함된_dto_입력() {
         //에상
         String title = "라라라라";
@@ -84,10 +85,29 @@ class ArticleServiceTest {
 
     //과제
     @Test
+    @Transactional
     void update() {
+        //예상
+        Long id = 1L;
+        String title = "라라라라";
+        String content  = "4444";
+        ArticleForm dto = new ArticleForm(id, title, content);
+        Article expected = new Article(id, title, content);
+        //실제
+        Article article = articleService.update(id, dto);
+        //비교
+        assertEquals(expected.toString(), article.toString());
     }
 
     @Test
+    @Transactional
     void delete() {
+        //예상
+        Long id = 2L;
+        Article expected = new Article(id, "나나나나","2222");
+        //실제
+        Article article = articleService.delete(id);
+        //비교
+        assertEquals(expected.toString(),article.toString());
     }
 }
