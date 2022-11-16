@@ -1,0 +1,42 @@
+<div class="card m-2" id="comments-new">
+    <div class="card-body">
+    <!-- 댓글 작성폼  -->
+        <form>
+        <!--닉네임 입력-->
+            <div class="mb-3">
+                <label class="form-label">닉네임</label>
+                <input type="text" class="form-control form-control-sm" id="new-comment-nickname">
+            </div>
+            <!--댓글 본문 입력-->
+            <div class="mb-3">
+                <label class="form-label">댓글내용</label>
+                <textarea class="form-control form-control-sm" id="new-comment-body" rows="3"></textarea>
+            </div>
+            <!--댓글은 게시글에 포함되므로 article에 id를 hidden으로 가지고 있어야 한다.-->
+            {{#article}}
+            <input type="hidden" id="new-comment-article-id" value="{{id}}">
+            {{/article}}
+            <!--댓글전송 버튼-->
+            <button type="button" class="btn btn-outline-primary" id="comment-create-btn">댓글작성</button>
+
+        </form>
+    </div>
+</div>
+
+<script>
+{
+    //댓글 생성 버튼 변수화
+    const commentCreateBtn = document.querySelector("#comment-create-btn");
+
+    //댓글 클릭 이벤트 감지!
+    commentCreateBtn.addEventListener("click",function(){
+      const comment = {
+        nickname : document.querySelector("#new-comment-nickname").value,
+        body : document.querySelector("#new-comment-body").value,
+        articleId : document.querySelector("#new-comment-article-id").value
+      };
+
+        console.log(comment);
+    });
+}
+</script>

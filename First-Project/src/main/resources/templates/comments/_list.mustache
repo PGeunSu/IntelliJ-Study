@@ -1,0 +1,17 @@
+<div id="comments-list">
+<!--  반복해서 commntDto의 내용 출력  -->
+    <!-- -->
+    {{#commentDtos}}
+        <div class="card m-2" id="comments-{{id}}">
+            <div class="card-header">
+                {{nickname}}
+            </div>
+            <div class="card-body">
+                {{body}}
+            </div>
+
+        </div>
+
+    {{/commentDtos}}
+
+</div>
