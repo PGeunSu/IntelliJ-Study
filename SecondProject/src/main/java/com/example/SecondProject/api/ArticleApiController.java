@@ -1,4 +1,4 @@
-package com.example.SecondProject.controller;
+package com.example.SecondProject.api;
 
 import com.example.SecondProject.dto.ArticleForm;
 import com.example.SecondProject.entity.Article;
