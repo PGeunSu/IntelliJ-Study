@@ -12,4 +12,3 @@ public abstract class Ingredient {
         return name;
     }
 }
-ㅂ
