@@ -15,6 +15,7 @@ public class DebuggingAspect {
 
     //대상 메소드 선택 : CommentService#create()
     @Pointcut("execution(* com.example.First.Project.service.CommentService.*(..))") //부가 기능 주입 대상 지정
+    //@Pointcut("execution(* com.example.First.Project.api.*.*(..))") //부가 기능 주입 대상 지정
     private void cut(){
 
     }
