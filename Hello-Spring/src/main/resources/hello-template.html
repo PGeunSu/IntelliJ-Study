@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <p th:text="'hello. '+ ${name}" >hello! empty</p>
+<!--thymeleaf는 "'hello' + ${name}" 이라는 값으로 치환이 된다. 실질적으로 hello! empty 값은 없어도 된다.-->
+<!--서버없이 HTML을 볼 때 마크업 하는 사람이 보기 위해 hello! empty라고 작성해주는 것이다.-->
+</body>
+</html>

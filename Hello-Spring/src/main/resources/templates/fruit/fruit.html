@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    ${...} 변수 표현식<br>
+    <span th:text="${fruit.fruit1}"></span><br>
+    <span th:text="${fruit.fruit2}"></span><br>
+    <span th:text="${fruit.fruit3}"></span><br><br>
+
+    *{...} 선택 변수 표현식<br>
+    <div th:object="${fruit}">
+        <span th:text="*{fruit1}"></span><br>
+        <span th:text="*{fruit2}"></span><br>
+        <span th:text="*{fruit3}"></span><br><br>
+    </div>
+
+    #{...} 메시지 표현식 <br>
+    <span th:text = "#{FRUITS.FRUIT4}"></span><br><br>
+
+    @{...} 링크 URL 표햔식 <br>
+    <a th:href="@{http://www.naver.com}">Naver</a><br><br>
+
+    ~{...} fragment 표현식 <br>
+    <div th:insert="~{common/footer :: sampleFooter}"></div><br>
+    <!-- ~{...} 다른곳에서 정의해 놓은 내용을 가지고 올 때-->
+
+</body>
+</html>
