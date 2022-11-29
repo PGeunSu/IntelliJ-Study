@@ -5,14 +5,14 @@ import Hello.HelloSpring.repository.MemberRepository;
 import Hello.HelloSpring.repository.MemoryMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
+@Transactional
 public class MemberService {
-    
-    @Autowired
+
     private MemberRepository memberRepository;
     //service 를 만들기 위해서는 Repository 가 있어야함
 
