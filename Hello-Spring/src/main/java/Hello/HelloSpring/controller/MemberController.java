@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.sql.SQLOutput;
 import java.util.List;
 
 @Controller
@@ -18,6 +19,7 @@ public class MemberController {
     @Autowired
     public MemberController(MemberService memberService) {
         this.memberService = memberService;
+        System.out.println("memberService : " + memberService.getClass());
     }
     //모든 컨트롤러에서 사용하는 서비스 객체가 같게하기 위해서 스프링 컨테이너에 서비스 객체를 등록
     //@Autowired :  생성자에 이 어노테이션이 있으면 인자로 받은 값을 스프링 컨테이너에 있는 memberService 에 연결해준다.
