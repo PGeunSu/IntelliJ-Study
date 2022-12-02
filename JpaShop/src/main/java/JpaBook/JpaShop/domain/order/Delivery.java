@@ -23,8 +23,6 @@ public class Delivery {
 
     @Enumerated(EnumType.STRING) //항상 String 타입으로 설정
     private DeliveryStatus status; //READY, COMP
-
-
-
-
 }
+
+
