@@ -52,4 +52,43 @@ public class Order {
         this.delivery = delivery;
         delivery.setOrder(this);
     }
+
+    //연관관계 메서드를 통해 관련된 내용들을 한 번에 처리해 주는 것이 외부애서 Setter 에 접근하는 것 보다 좋다.
+
+    //복잡한 생성은 생성 메서드를 만들어서 사용
+    public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems){
+        Order order = new Order();
+        order.setMember(member);
+        order.setDelivery(delivery);
+        for(OrderItem orderItem : orderItems){
+            order.addOrderItem(orderItem);
+        }
+        order.setStatus(OrderStatus.ORDER);
+        order.setOrderDate(LocalDateTime.now());
+        return order;
+
+    }
+
+    //비즈니스 로직
+    //주문 취소
+    public void cancel(){
+        if(delivery.getStatus() == DeliveryStatus.COMP){
+            throw new IllegalArgumentException("이미 배송완료된 상품은 취소가 불가능 합니다.");
+        }
+        this.setStatus(OrderStatus.CANCEL);
+        for(OrderItem orderItem : orderItems){ //루프를 돌면서 재고를 원상복구
+            orderItem.cancel(); //주문이 2개이상이면 각에 cancel 을 해줌
+        }
+    }
+
+    //조회로직
+    //전체 주문 가격 조회
+    public int getTotalPrice(){
+        int totalPrice = 0;
+        for(OrderItem orderItem : orderItems){
+            totalPrice += orderItem.getTotalPrice();
+
+        }
+        return totalPrice;
+    }
 }
