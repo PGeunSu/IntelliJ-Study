@@ -54,8 +54,10 @@ public class Order {
     }
 
     //연관관계 메서드를 통해 관련된 내용들을 한 번에 처리해 주는 것이 외부애서 Setter 에 접근하는 것 보다 좋다.
+    //복잡한 생성은 생성 메서드를 만들어서 사용 - 주문 엔티티 생성
+    //생성 메서드 - 주문 회원, 배송정보, 주문 상품의 정보를 받아서 실제 주문 엔티티를 생성
 
-    //복잡한 생성은 생성 메서드를 만들어서 사용
+
     public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems){
         Order order = new Order();
         order.setMember(member);
@@ -78,6 +80,7 @@ public class Order {
         this.setStatus(OrderStatus.CANCEL);
         for(OrderItem orderItem : orderItems){ //루프를 돌면서 재고를 원상복구
             orderItem.cancel(); //주문이 2개이상이면 각에 cancel 을 해줌
+            //Jpa 장점 중 하나로 order 에서 cancel()을 용하게 되면 따로 값의 변경이 있지만 update 코드로 작성하지 않는다.
         }
     }
 
