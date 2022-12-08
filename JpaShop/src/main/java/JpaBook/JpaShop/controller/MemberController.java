@@ -3,6 +3,7 @@ package JpaBook.JpaShop.controller;
 import JpaBook.JpaShop.domain.Member;
 import JpaBook.JpaShop.domain.order.Address;
 import JpaBook.JpaShop.service.MemberService;
+import JpaBook.JpaShop.web.MemberForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
