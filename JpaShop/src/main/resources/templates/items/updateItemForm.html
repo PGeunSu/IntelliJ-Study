@@ -12,8 +12,7 @@
         <form th:action="@{/items/{itemId}/edit}" th:object="${form}" method="post">
             <!--id-->
             <input type="hidden" th:field="*{id}">
-
-            <div class="form-group">
+q
                 <label th:for="name">상품명</label>
                 <input type="text" th:field="*{name}" class="form-control">
             </div>
