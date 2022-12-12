@@ -34,15 +34,15 @@ public class OrderController {
         return "order/orderForm";
     }
 
-    @PostMapping("/order")
-    public String order(@RequestParam("memberId") Long memberId, @RequestParam("itemId") Long itemId, @RequestParam("count") int count){
-
+    @PostMapping(value = "/order")
+    public String order(@RequestParam("memberId") Long memberId, @RequestParam("itemId") Long itemId, @RequestParam("count") int count) {
         orderService.order(memberId, itemId, count);
         return "redirect:/orders";
     }
 
+
     //주문 목록
-    @GetMapping("/orders")
+    @GetMapping(value = "/orders")
     public String orderList(@ModelAttribute("orderSearch")OrderSearch orderSearch, Model model){
         List<Order> orders = orderService.findOrders(orderSearch);
         model.addAttribute("orders",orders);

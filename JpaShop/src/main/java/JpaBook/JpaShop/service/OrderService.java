@@ -3,6 +3,7 @@ package JpaBook.JpaShop.service;
 import JpaBook.JpaShop.domain.Member;
 import JpaBook.JpaShop.domain.item.Item;
 import JpaBook.JpaShop.domain.order.Delivery;
+import JpaBook.JpaShop.domain.order.DeliveryStatus;
 import JpaBook.JpaShop.domain.order.Order;
 import JpaBook.JpaShop.domain.order.OrderItem;
 import JpaBook.JpaShop.repository.ItemRepository;
@@ -24,37 +25,32 @@ public class OrderService {
     private final MemberRepository memberRepository;
     private final ItemRepository itemRepository;
 
-    //주문
+    /** 주문 */
     @Transactional
-    public Long order(Long memberId, Long itemId, int count){
+    public Long order(Long memberId, Long itemId, int count) {
 
         //엔티티 조회
-        Member member = memberRepository.findOne(memberId);
-        Item item = itemRepository.findOne(itemId);
-
+        Member member = memberRepository.findOne(memberId); Item item = itemRepository.findOne(itemId);
         //배송정보 생성
-        Delivery delivery = new Delivery();
-        delivery.setAddress(member.getAddress());
-
+        Delivery delivery = new Delivery(); delivery.setAddress(member.getAddress()); delivery.setStatus(DeliveryStatus.READY);
         //주문상품 생성
-        OrderItem orderItem = OrderItem.createOrderItem(item, item.getPrice(), count);
-
+        OrderItem orderItem = OrderItem.createOrderItem(item, item.getPrice(),count);
         //주문 생성
         Order order = Order.createOrder(member, delivery, orderItem);
-
         //주문 저장
         orderRepository.save(order);
         return order.getId();
 
     }
+
+    /** 주문 취소 */
+    @Transactional
+    public void cancelOrder(Long orderId) {
+        //주문 엔티티 조회
+        Order order = orderRepository.findOne(orderId);
         //주문 취소
-        @Transactional
-        public void cancelOrder(Long orderId){
-            //주문 엔티티 조회
-            Order order = orderRepository.findOne(orderId);
-            //취소
-            order.cancel();
-        }
+        order.cancel();
+    }
 
     public List<Order> findOrders(OrderSearch orderSearch) {
         return orderRepository.findAllByString(orderSearch);
