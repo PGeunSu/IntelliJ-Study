@@ -31,16 +31,16 @@ public class SecurityConfig {
                 .logoutSuccessUrl("/") //로그아웃 성공 시 이동할 url
         ;
 
-        http.authorizeRequests()
-                .mvcMatchers("/css/**", "/js/**", "/img/**").permitAll()
+        http.authorizeRequests() //시큐리티 처리에 HttpServletRequest 를 이용한다는 의미
+                .mvcMatchers("/css/**", "/js/**", "/img/**").permitAll() //permitAll() : 모든 사용자가 로그인 없이 경로 접근 가능
                 .mvcMatchers("/", "/members/**", "/item/**", "/images/**").permitAll()
-                .mvcMatchers("/admin/**").hasRole("ADMIN")
+                .mvcMatchers("/admin/**").hasRole("ADMIN") //ADMIN 일 경우만 접근 가능
                 .anyRequest().authenticated()
         ;
 
         http.exceptionHandling()
-                .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
-        ;
+                .authenticationEntryPoint(new CustomAuthenticationEntryPoint());
+        //인증되지 않는 사용자가 리소스에 접근했을 떄 수행되는 핸들러 등록
 
         return http.build();
     }
