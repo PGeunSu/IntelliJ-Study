@@ -14,7 +14,7 @@ import org.springframework.util.StopWatch;
 public class PerformanceAspect {
 
     //특정 어노테이션을 대상지정
-    @Pointcut("@annotation(com.example.SecondProject.annotation.RunningTime")
+    @Pointcut("@annotation(com.example.SecondProject.annotation.RunningTime)")
     private void enableRunningTime(){
 
     }

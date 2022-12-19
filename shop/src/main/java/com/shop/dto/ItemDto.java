@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter @Setter
 public class ItemDto {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+
     private Long id;
 
     private String itemNm;
