@@ -1,8 +1,13 @@
 package com.shop.controller;
 
 import com.shop.dto.ItemFormDto;
+import com.shop.dto.ItemSearchDto;
+import com.shop.entity.Item;
 import com.shop.service.ItemService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +21,7 @@ import javax.naming.Binding;
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -81,6 +87,24 @@ public class ItemController {
         }
         return "redirect:/";
     }
+
+    @GetMapping(value = {"/admin/items", "/admin/items/{page}"})
+    public String pageable(ItemSearchDto itemSearchDto, @PathVariable("page") Optional<Integer> page, Model model){
+
+        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 3);
+        Page<Item> items = itemService.getAdminItemPage(itemSearchDto, pageable);
+
+        model.addAttribute("items",items);
+        model.addAttribute("itemSearchDto",itemSearchDto);
+        model.addAttribute("maxPage",5);
+
+        //ItemController 클래스에 상품 관리 화면 이동 및 조회한 상품 데이터를 화면에 전달하는 로직을 구현
+        //현재 상품 데이터가 많이 없는 관계로 한 페이지당 총 3개의 상품만 보여주록 설정함
+
+        return "item/itemMng";
+
+    }
+
 
 
 
