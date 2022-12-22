@@ -78,23 +78,23 @@ class OrderServiceTest {
         //주문한 상품 총 가격과 DB 에 저장된 상품의 가격을 비교하여 같으면 테스트 성공
     }
 
-//    @Test
-//    @DisplayName("주문 취소 테스트")
-//    public void cancelOrder(){
-//        Item item = saveItem();
-//        Member member = saveMember();
-//
-//        OrderDto orderDto = new OrderDto();
-//        orderDto.setCount(10);
-//        orderDto.setItemId(item.getId());
-//        Long orderId = orderService.order(orderDto, member.getEmail());
-//
-//        Order order = orderRepository.findById(orderId)
-//                .orElseThrow(EntityNotFoundException::new);
-//        orderService.cancelOrder(orderId);
-//
-//        assertEquals(OrderStatus.CANCEL, order.getOrderStatus());
-//        assertEquals(100, item.getStockNumber());
-//    }
+    @Test
+    @DisplayName("주문 취소 테스트")
+    public void cancelOrder(){
+        Item item = saveItem();
+        Member member = saveMember();
+
+        OrderDto orderDto = new OrderDto();
+        orderDto.setCount(10);
+        orderDto.setItemId(item.getId());
+        Long orderId = orderService.order(orderDto, member.getEmail());
+
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(EntityNotFoundException::new);
+        orderService.cancelOrder(orderId);
+
+        assertEquals(OrderStatus.CANCEL, order.getOrderStatus());
+        assertEquals(100, item.getStockNumber());
+    }
 
 }

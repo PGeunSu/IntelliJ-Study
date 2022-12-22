@@ -38,10 +38,10 @@ public class OrderItem extends BaseEntity{
     }
     public int getTotalPrice(){
         return orderPrice * count;
-    }
+    } //주문 가격과 주문 수량을 곱하여 해당 상품의 총 가격을 구함
     public void cancel(){
         this.getItem().addStock(count);
-    }
+    } //주문 취소 시 주문 수량 만큼 상품의 재고를 더해줌
 
 
 

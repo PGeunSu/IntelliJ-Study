@@ -74,5 +74,14 @@ public class OrderController {
         return "order/orderHist";
     }
 
+    @PostMapping("/order/{orderId}/cancel")
+    public @ResponseBody ResponseEntity cacelOrder(@PathVariable("orderId") Long orderId, Principal principal){
+        if(!orderService.validateOrder(orderId, principal.getName())){
+            return new ResponseEntity<String>("주문 취소 권환이 없습니다.",HttpStatus.FORBIDDEN);
+        }
+        orderService.cancelOrder(orderId);
+        return new ResponseEntity<Long>(orderId,HttpStatus.OK);
+    }
+
 }
 

@@ -112,8 +112,8 @@
                 <div class="align-self-center w-75">
                     <span th:text="${orderItem.itemNm}" class="fs24 font-weight-bold"></span>
                     <div class="fs18 font-weight-light">
-                        <span th:text="${orderItem.orderPrice} +'원'"></span>
-                        <span th:text="${orderItem.count} +'개'"></span>
+                        <span th:text="'주문 수량 : ' + ${orderItem.count}"></span> <br>
+                        <span th:text="'총 주문 금액 : ' + ${orderItem.orderPrice * orderItem.count} +'원'"></span>
                     </div>
                 </div>
             </div>

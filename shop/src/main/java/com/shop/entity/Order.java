@@ -61,12 +61,12 @@ public class Order extends BaseEntity{
         return totalPrice;
     }
 
-    public void cacelOrder(){
+    public void cancelOrder(){
         this.orderStatus = OrderStatus.CANCEL;
+
         for(OrderItem orderItem : orderItems){
-
+            orderItem.cancel();
         }
-    }
-
+    } //Item 클래스에서 주문 취소 시 주문 수량을 상품의 재고에 더해주는 로직과 주문상태를 취소 상태로 바꿔주는 메서드 구현
 
 }
