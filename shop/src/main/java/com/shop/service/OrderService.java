@@ -1,13 +1,11 @@
 package com.shop.service;
 
+import com.shop.dto.CartOrderDto;
 import com.shop.dto.OrderDto;
 import com.shop.dto.OrderHistoryDto;
 import com.shop.dto.OrderItemDto;
 import com.shop.entity.*;
-import com.shop.repository.ItemImgRepository;
-import com.shop.repository.ItemRepository;
-import com.shop.repository.MemberRepository;
-import com.shop.repository.OrderRepository;
+import com.shop.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -29,6 +27,7 @@ public class OrderService {
     private final MemberRepository memberRepository;
     private final OrderRepository orderRepository;
     private final ItemImgRepository itemImgRepository;
+    private final CartItemRepository cartItemRepository;
 
     public Long order(OrderDto orderDto, String email){
         Item item = itemRepository.findById(orderDto.getItemId()).orElseThrow(EntityNotFoundException::new);
@@ -83,4 +82,23 @@ public class OrderService {
         Order order = orderRepository.findById(orderId).orElseThrow(EntityNotFoundException::new);
         order.cancelOrder();
     } //주문 취소 상태로 변경하면 변경감지 기능에 의해서 트렌젝션이 끝날 때 update 쿼리 실행
+
+    public Long orders(List<OrderDto> orderDtoList, String email){
+        Member member = memberRepository.findByEmail(email);
+        List<OrderItem> orderItemList = new ArrayList<>();
+
+        for(OrderDto orderDto : orderDtoList){ //주문할 상품 리스트 생성
+            Item item = itemRepository.findById(orderDto.getItemId()).orElseThrow(EntityNotFoundException::new);
+
+            OrderItem orderItem = OrderItem.createOrderItem(item, orderDto.getCount());
+            orderItemList.add(orderItem);
+        }
+        Order order = Order.createOrder(member, orderItemList);
+        //현재 로그인한 회원과 주문 상품 목록을 이용하여 주문 엔티티 생성
+        orderRepository.save(order);
+
+        return order.getId();
+    }
+
+
 }
